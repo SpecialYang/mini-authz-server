@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mini-authz-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mini-authz-server
+  template:
+    metadata:
+      labels:
+        app: mini-authz-server
+    spec:
+      containers:
+        - image: specialyang/mini-authz-server
+          imagePullPolicy: Always
+          name: main
