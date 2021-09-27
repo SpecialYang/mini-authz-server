@@ -18,15 +18,10 @@ public class JwtTokenProviderTest {
     JwtTokenProvider jwtTokenProvider;
 
     @Test
-    public void createToken() {
-        String username = "mini-authz-server";
-        System.out.println(jwtTokenProvider.createToken(username));
-    }
-
-    @Test
     public void validToken() {
         String username = "mini-authz-server";
         String token = jwtTokenProvider.createToken(username);
+        System.out.println(token);
 
         Assert.assertTrue(jwtTokenProvider.validateToken(token));
     }
