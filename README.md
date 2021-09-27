@@ -55,4 +55,7 @@ curl --location --request POST 'localhost:8080/users/signin' \
 ## 注意
 1. 本项目为了快速部署、快速验证，所以用户的数据库使用是内存形式，也就是说默认数据库仅仅是用来快速测试。并且每次部署都会重新初始化内存数据库，所以在你准备用于生产之前请修改默认的数据库配置。
 2. 本项目默认使用的注册中心是Nacos，如你的其他服务需要访问该服务，请正确修改Nacos的服务地址。
-3. 本项目JWT的使用非对称加密RSA，默认配置中的公钥、私钥仅用于快速测试。
+3. 本项目JWT的签名算法使用的非对称加密RSA + SHA256 Hash，默认配置中的RSA JWK仅用于快速测试。
+
+注意：JWK (JSON Web Key) 是以JSON格式表示加密算法的信息。你可以通过 https://mkjwk.org/ 来生成你自己的JWK，然后将 Public and Private Keypair信息复制到application.yaml中security.jwt.token.rsa-jwk即可。
+其他组件（如网关需要验证Token的组件）则只需使用Public Key即可。
