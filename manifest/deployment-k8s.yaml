@@ -1,3 +1,4 @@
+# This deployment use k8s Service as dynamic endpoint discovery.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,3 +17,17 @@ spec:
         - image: specialyang/mini-authz-server
           imagePullPolicy: Always
           name: main
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mini-authz-server
+spec:
+  spec:
+    ports:
+      - port: 9090
+        targetPort: 8080
+        protocol: TCP
+    selector:
+      app: mini-authz-server
+

@@ -1,0 +1,25 @@
+# This deployment use nacos as dynamic endpoint discovery.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mini-authz-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mini-authz-server
+  template:
+    metadata:
+      labels:
+        app: mini-authz-server
+    spec:
+      containers:
+        - image: specialyang/mini-authz-server
+          imagePullPolicy: Always
+          env:
+          - name: nacos.discovery.server-addr
+            value: #{your nacos public net address}
+          - name: nacos.discovery.auto-register
+            value: true
+          name: main
+

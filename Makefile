@@ -11,10 +11,10 @@ docker-build: build
 	@docker build -f Dockerfile -t $(IMG):$(TAG) .
 
 .PHONY: docker-push
-docker-push:
+docker-push: docker-build
 	@docker tag $(IMG):$(TAG) $(HUB)/$(IMG):$(TAG)
 	@docker push $(HUB)/$(IMG):$(TAG)
 
 .PHONY: k8s-deploy
 k8s-deploy:
-	@kubectl apply -f manifest/deployment.yaml
+	@kubectl apply -f manifest/deployment-k8s.yaml
