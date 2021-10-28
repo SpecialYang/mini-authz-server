@@ -26,4 +26,6 @@ public class User {
 
     @Size(min = 6, message = "Minimum password length: 6 characters")
     private String password;
+
+    private String apis;
 }

@@ -44,13 +44,14 @@ public class JwtTokenProvider {
             // iss
             claims.setIssuer(issuer);
             // sub
-            claims.setSubject(issuer);
-            // aud
-            claims.setAudience(username);
+            claims.setSubject(username);
             // exp
             claims.setExpirationTimeMinutesInTheFuture(expiry);
             // nbf
             claims.setNotBeforeMinutesInThePast(1);
+
+            // business field
+            claims.setClaim("username", username);
 
             JsonWebSignature jws = new JsonWebSignature();
             jws.setKeyIdHeaderValue(kid);
@@ -65,17 +66,12 @@ public class JwtTokenProvider {
         }
     }
 
-    public boolean validateToken(String token) {
-        try {
-            JwtConsumer jwtConsumer = new JwtConsumerBuilder()
-                    .setVerificationKey(rsaJWKInstance.getPublicKey())
-                    .setSkipDefaultAudienceValidation()
-                    .build();
-            jwtConsumer.processToClaims(token);
-            return true;
-        } catch (InvalidJwtException e) {
-            throw new CustomException("Expired or invalid JWT token", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public JwtClaims validateToken(String token) throws InvalidJwtException {
+        JwtConsumer jwtConsumer = new JwtConsumerBuilder()
+                .setVerificationKey(rsaJWKInstance.getPublicKey())
+                .setSkipDefaultAudienceValidation()
+                .build();
+        return jwtConsumer.processToClaims(token);
     }
 
 }
