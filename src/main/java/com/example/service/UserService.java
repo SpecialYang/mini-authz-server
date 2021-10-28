@@ -15,6 +15,7 @@ import org.jose4j.jwt.JwtClaims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -90,9 +91,11 @@ public class UserService {
         }
 
         List<String> apis = JSON.parseArray(user.getApis(), String.class);
-        for (String api : apis) {
-            if (api.equals("*") || api.equals(originPath)) {
-                return RestResult.successResult(null, "Validate success.");
+        if (!CollectionUtils.isEmpty(apis)) {
+            for (String api : apis) {
+                if (api.equals("*") || api.equals(originPath)) {
+                    return RestResult.successResult(null, "Validate success.");
+                }
             }
         }
 
