@@ -94,7 +94,7 @@ public class UserService {
         if (!CollectionUtils.isEmpty(apis)) {
             for (String api : apis) {
                 if (api.equals("*") || api.equals(originPath)) {
-                    return RestResult.successResult(null, "Validate success.");
+                    return RestResult.successResult(username, "Validate success.");
                 }
             }
         }

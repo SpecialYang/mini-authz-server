@@ -38,11 +38,11 @@ public final class RestResult<T> implements Serializable {
     }
 
     public static <T> RestResult<T> failResult(int httpStatusCode, String message) {
-            RestResult<T> restResult = new RestResult<>();
-            restResult.setStatus(httpStatusCode);
-            restResult.setMessage(message);
-            return restResult;
-        }
+        RestResult<T> restResult = new RestResult<>();
+        restResult.setStatus(httpStatusCode);
+        restResult.setMessage(message);
+        return restResult;
+    }
     
     public static <T> RestResult<T> successResult(T data) {
         RestResult<T> restResult = new RestResult<>();

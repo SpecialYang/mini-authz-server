@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.common.RestResult;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -29,6 +30,12 @@ public class CheckController {
     public ResponseEntity<RestResult<String>> check(@RequestHeader(value = "authorization", required = false) String token,
                                 HttpServletRequest request) {
         RestResult<String> result = userService.check(token, request.getServletPath().substring("/check".length()));
-        return new ResponseEntity<>(result, HttpStatus.valueOf(result.getStatus()));
+        if (result.getStatus() != HttpStatus.OK.value()) {
+            return new ResponseEntity<>(result, HttpStatus.valueOf(result.getStatus()));
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-Auth-Request-User", result.getData());
+        return ResponseEntity.ok().headers(headers).body(result);
     }
 }
