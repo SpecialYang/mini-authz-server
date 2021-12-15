@@ -39,7 +39,8 @@ curl --location --request POST 'localhost:8080/users/signup' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "username": "yang",
-    "password": "123456"
+    "password": "123456",
+    "apis": ["*"]
 }'
 
 // 登录并获取Token
