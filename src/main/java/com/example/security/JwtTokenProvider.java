@@ -44,7 +44,7 @@ public class JwtTokenProvider {
             // iss
             claims.setIssuer(issuer);
             // sub
-            claims.setSubject(username);
+            claims.setSubject(issuer);
             // exp
             claims.setExpirationTimeMinutesInTheFuture(expiry);
             // nbf
